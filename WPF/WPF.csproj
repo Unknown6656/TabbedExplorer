@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <OutDir>$(SolutionDir)bin</OutDir>
+        <AssemblyName>TabbedExplorer.WPF</AssemblyName>
+        <RootNamespace>TabbedExplorer.WPF</RootNamespace>
+        <TargetFramework>net6.0-windows10.0.18362.0</TargetFramework>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>preview</LangVersion>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="ModernWpf.MessageBox" Version="0.5.2" />
+        <PackageReference Include="ModernWpfUI" Version="0.9.4" />
+        <PackageReference Include="SharpVectors.Reloaded" Version="1.7.7" />
+        <None Remove="images/*/*.svg" />
+        <Resource Include="images/*/*.svg" />
+    </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="NativeContextMenu.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="NativeContextMenu.cs-old-.txt" />
+    </ItemGroup>
+    <ItemGroup>
+      <COMReference Include="Shell32">
+        <WrapperTool>tlbimp</WrapperTool>
+        <VersionMinor>0</VersionMinor>
+        <VersionMajor>1</VersionMajor>
+        <Guid>50a7e9b0-70ef-11d1-b75a-00a0c90564fe</Guid>
+        <Lcid>0</Lcid>
+        <Isolated>false</Isolated>
+        <EmbedInteropTypes>true</EmbedInteropTypes>
+      </COMReference>
+    </ItemGroup>
+</Project>

@@ -1,0 +1,31 @@
+﻿<Application x:Class="TabbedExplorer.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             xmlns:local="clr-namespace:TabbedExplorer.WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemeResources/>
+                <ui:XamlControlsResources/>
+                <ui:IntellisenseResources Source="/ModernWpf;component/DesignTime/DesignTimeResources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <local:NativeIconToImage x:Key="icon_to_img"/>
+            <local:NativeIconToImageSource x:Key="icon_to_imgsrc"/>
+            <local:VisibilityInverter x:Key="visibility_inverter"/>
+            <local:NullVisibilityConverter x:Key="null_to_visibility"/>
+            <local:BooleanInverter x:Key="boolean_inverter"/>
+            <SolidColorBrush x:Key="col.gray" Color="{DynamicResource SystemChromeGrayColor}"/>
+            <SolidColorBrush x:Key="col.fore" Color="{DynamicResource SystemBaseMediumHighColor}"/>
+            <SolidColorBrush x:Key="col.back" Color="{DynamicResource SystemChromeMediumLowColor}"/>
+            <SolidColorBrush x:Key="col.fore.contrast" Color="{DynamicResource SystemBaseHighColor}"/>
+            <SolidColorBrush x:Key="col.back.contrast" Color="{DynamicResource SystemAltHighColor}"/>
+            <SolidColorBrush x:Key="col.fore.disabled" Color="{DynamicResource SystemChromeDisabledLowColor}"/>
+            <SolidColorBrush x:Key="col.back.disabled" Color="{DynamicResource SystemChromeMediumHighColor}"/>
+            <FontFamily x:Key="font">Segoe UI Symbol</FontFamily>
+            <sys:Boolean x:Key="AutoHideScrollBars">True</sys:Boolean>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
