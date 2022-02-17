@@ -1,0 +1,13 @@
+﻿[ ] filesystem watcher
+[ ] key handling
+[ ] navigator overflow
+[ ] remember tabs
+[ ] settings page
+[ ] theme change msgbox
+[ ] explorer interaction (shell open with)
+[ ] file right click ctxmenu
+[ ] undo / redo stack
+[ ] drag / drop support
+[ ] folder eject / goto parent if deleted
+[ ] 
+[ ] 
