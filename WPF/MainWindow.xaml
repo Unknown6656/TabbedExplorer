@@ -1,0 +1,131 @@
+﻿<Window x:Class="TabbedExplorer.WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:fx="https://unknown6656.com/wpfpslib"
+        xmlns:svg="http://sharpvectors.codeplex.com/svgc/"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+        xmlns:local="clr-namespace:TabbedExplorer.WPF"
+        mc:Ignorable="d"
+        ui:ThemeManager.IsThemeAware="True"
+        ui:Design.RequestedTheme="Dark"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Title="Tabbed Windows Explorer"
+        Name="Window"
+        Padding="0"
+        Margin="0"
+        MinWidth="900"
+        MinHeight="500"
+        Height="800"
+        Width="1200">
+    <!--
+        ui:TitleBar.ExtendViewIntoTitleBar="True"
+        ui:TitleBar.ButtonStyle="{DynamicResource AppTitleBarButtonStyle}"
+        ui:TitleBar.BackButtonStyle="{DynamicResource AppTitleBarBackButtonStyle}"
+        WindowChrome.IsHitTestVisibleInChrome="False"
+    -->
+    <Window.Resources>
+        <Style x:Key="AppTitleBarButtonStyle" TargetType="ui:TitleBarButton">
+            <Setter Property="IsActive" Value="{Binding IsActive, ElementName=Window}" />
+        </Style>
+        <Style x:Key="AppTitleBarBackButtonStyle" TargetType="ui:TitleBarButton" BasedOn="{StaticResource TitleBarBackButtonStyle}">
+            <Setter Property="IsActive" Value="{Binding IsActive, ElementName=Window}" />
+        </Style>
+        <sys:String x:Key="tag_settings">tag:settings</sys:String>
+        <sys:String x:Key="tag_newtab">tag:newtab</sys:String>
+        <Image x:Key="img_shell_105" Source="{Binding Converter={StaticResource icon_to_imgsrc}, ConverterParameter=shell32.dll|105}"/>
+    </Window.Resources>
+    <Grid IsHitTestVisible="{Binding IsModalActive, ElementName=Window, Converter={StaticResource boolean_inverter}}">
+        <Grid.Style>
+            <Style TargetType="{x:Type Grid}">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding IsModalActive, ElementName=Window}" Value="True">
+                        <Setter Property="Effect">
+                            <Setter.Value>
+                                <BlurEffect x:Name="fx_blur" Radius="10"/>
+                            </Setter.Value>
+                        </Setter>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--see http://modernicons.io/segoe-mdl2/cheatsheet/-->
+        <StackPanel Grid.Row="0" Background="{StaticResource col.back}" Panel.ZIndex="3000" Orientation="Horizontal">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type local:ThemedSVGButton}" BasedOn="{StaticResource {x:Type Button}}"/>
+                <Style TargetType="{x:Type Rectangle}">
+                    <Setter Property="Width" Value="1"/>
+                    <Setter Property="Margin" Value="7"/>
+                    <!--<Setter Property="Opacity" Value=".4"/>-->
+                    <Setter Property="Fill" Value="{StaticResource col.fore.disabled}"/>
+                </Style>
+            </StackPanel.Resources>
+            <local:ThemedSVGButton x:Name="btn_undo" ImageName="windows.undo" Click="btn_undo_Click"/>
+            <local:ThemedSVGButton x:Name="btn_redo" ImageName="windows.redo" Click="btn_redo_Click"/>
+            <Rectangle/>
+            <local:ThemedSVGButton x:Name="btn_new_file" ImageName="windows.newitem" Click="btn_new_file_Click"/>
+            <local:ThemedSVGButton x:Name="btn_new_folder" ImageName="windows.newitem.newfolder" Click="btn_new_folder_Click"/>
+            <Rectangle/>
+            <local:ThemedSVGButton x:Name="btn_file_rename" ImageName="windows.rename" Click="btn_file_rename_Click"/>
+            <local:ThemedSVGButton x:Name="btn_file_paste" ImageName="windows.paste" Click="btn_file_paste_Click"/>
+            <local:ThemedSVGButton x:Name="btn_file_copy" ImageName="windows.copy" Click="btn_file_copy_Click"/>
+            <local:ThemedSVGButton x:Name="btn_file_cut" ImageName="windows.cut" Click="btn_file_cut_Click"/>
+            <local:ThemedSVGButton x:Name="btn_file_delete" ImageName="windows.recycle" Click="btn_file_delete_Click"/>
+            <Rectangle/>
+            <local:ThemedSVGButton x:Name="btn_select_all" ImageName="windows.selectall" Click="btn_select_all_Click"/>
+            <local:ThemedSVGButton x:Name="btn_select_none" ImageName="windows.selectnone" Click="btn_select_none_Click"/>
+            <local:ThemedSVGButton x:Name="btn_select_invert" ImageName="windows.invertselection" Click="btn_select_invert_Click"/>
+            <Rectangle/>
+            <local:ThemedSVGButton x:Name="btn_file_copy_path" ImageName="windows.copyaspath" Click="btn_file_copy_path_Click"/>
+            <local:ThemedSVGButton x:Name="btn_file_share" ImageName="windows.ModernShare" Click="btn_file_share_Click"/>
+            <local:ThemedSVGButton x:Name="btn_pin" ImageName="windows.pintohome" Click="btn_pin_Click"/>
+            <local:ThemedSVGButton x:Name="btn_unpin" ImageName="windows.unpinfromhome" Click="btn_unpin_Click"/>
+            <local:ThemedSVGButton x:Name="btn_file_compress" ImageName="Windows.Zip.Action" Click="btn_file_compress_Click"/>
+            <Rectangle/>
+            <local:ThemedSVGButton x:Name="btn_file_properties" ImageName="windows.properties" Click="btn_file_properties_Click"/>
+            <Rectangle/>
+            <!-- TODO: new tab -->
+            <!-- TODO: duplicate tab -->
+            <!-- TODO: close tab -->
+            <!-- TODO: close all tabs -->
+            <!-- TODO: reopen tab -->
+
+            <!-- $älove u -->
+        </StackPanel>
+        <TabControl x:Name="tab_control" Grid.Row="1" Margin="0,-8,0,0">
+            <TabItem Header="⚙" Tag="{x:Static local:MainWindow.KEY_SETTINGS}" ToolTip="Settings">
+                <Grid Margin="10">
+                    <local:FileExplorerView/>
+                </Grid>
+            </TabItem>
+            <TabItem Tag="{x:Static local:MainWindow.KEY_NEWTAB}" ToolTip="New Tab">
+                <TabItem.Header>
+                    <local:ThemedSVGButton ImageName ="windows.searchclosetab" Margin="0" Padding="0" BorderThickness="0" Width="16" Height="16" IsHitTestVisible="False">
+                        <local:ThemedSVGButton.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX=".7" ScaleY=".7"/>
+                                <RotateTransform Angle="45"/>
+                            </TransformGroup>
+                        </local:ThemedSVGButton.LayoutTransform>
+                    </local:ThemedSVGButton>
+                    <!--<Label Padding="0" Margin="0">
+                        <Label.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX=".7" ScaleY=".7"/>
+                                <RotateTransform Angle="45"/>
+                            </TransformGroup>
+                        </Label.LayoutTransform>
+                        ❌
+                    </Label>-->
+                </TabItem.Header>
+                <ui:ProgressRing Width="50" Height="50" IsActive="True"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
