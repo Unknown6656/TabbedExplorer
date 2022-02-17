@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="TabbedExplorer.WPF.PathNavigator"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:uip="clr-namespace:ModernWpf.Controls.Primitives;assembly=ModernWPF"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             xmlns:local="clr-namespace:TabbedExplorer.WPF"
+             ui:Design.RequestedTheme="Dark"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             MinWidth="400"
+             Width="Auto"
+             Height="{DynamicResource size}"
+             Loaded="OnLoaded">
+    <UserControl.Resources>
+        <sys:Double x:Key="size">30</sys:Double>
+        <Style TargetType="Button" BasedOn="{StaticResource DefaultButtonStyle}">
+            <Setter Property="uip:ControlHelper.CornerRadius" Value="0"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0"/>
+            <!--<ColumnDefinition Width="5"/>-->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" x:Name="btn_back" Click="btn_back_Click" BorderThickness="0" Height="{StaticResource size}" Width="{StaticResource size}" Padding="0">
+            <ui:SymbolIcon Symbol="Back"/>
+        </Button>
+        <Button Grid.Column="1" x:Name="btn_fwd" Click="btn_fwd_Click" BorderThickness="0" Height="{StaticResource size}" Width="{StaticResource size}" Padding="0">
+            <ui:SymbolIcon Symbol="Forward"/>
+        </Button>
+        <Button Grid.Column="2" x:Name="btn_history" local:LeftClickContextMenu.Enabled="True" BorderThickness="0" Height="{StaticResource size}" Width="20" Padding="0">
+            <Button.ContextMenu>
+                <ContextMenu x:Name="ctx_history"/>
+            </Button.ContextMenu>
+            <ui:FontIcon FontFamily="{StaticResource font}" FontSize="14" Glyph="&#xe015;"/>
+        </Button>
+        <Button Grid.Column="3" x:Name="btn_up" Click="btn_up_Click" BorderThickness="0" Height="{StaticResource size}" Width="{StaticResource size}" Padding="0">
+            <ui:SymbolIcon Symbol="Up"/>
+        </Button>
+        <Border Grid.Column="5" BorderThickness="1" BorderBrush="{StaticResource col.fore.disabled}" CornerRadius="3" Height="{StaticResource size}">
+            <Grid>
+                <Grid x:Name="grid_raw">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" x:Name="tb_raw_path" FontSize="17" Padding="4" BorderThickness="0" Height="{StaticResource size}" LostFocus="tb_raw_path_LostFocus" GotFocus="tb_raw_path_GotFocus" KeyDown="tb_raw_path_KeyDown"/>
+                    <Button Grid.Column="1" x:Name="btn_goto" Click="btn_goto_Click" BorderThickness="0" Width="{StaticResource size}" Height="{StaticResource size}" Padding="0">
+                        <ui:SymbolIcon Symbol="Go"/>
+                    </Button>
+                </Grid>
+                <Grid x:Name="grid_path">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" x:Name="ico_current" MouseDown="ico_current_MouseDown" Height="18" Width="18" Margin="6,0,0,0"/>
+                    <ItemsControl Grid.Column="1" x:Name="ic_path" Padding="0" Focusable="False" SizeChanged="ic_path_SizeChanged" MouseDown="ic_path_MouseDown" Background="Transparent" Height="{StaticResource size}" Margin="0,-1">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type local:FilePath}">
+                                <Button Click="btn_path_segment_Click" Tag="{Binding}" ToolTip="{Binding FullPath}" Padding="0" VerticalContentAlignment="Center" Height="{StaticResource size}" Background="Transparent">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <ContentPresenter Grid.Column="0" Content="{Binding Name}" VerticalAlignment="Center" Margin="6,0,4,0"/>
+                                        <Button Grid.Column="1" Click="btn_path_dropdown_Click" Tag="{Binding}" BorderThickness="0" Height="{StaticResource size}" Padding="4,0" Background="Transparent">
+                                            <Button.ContextMenu>
+                                                <ContextMenu/>
+                                            </Button.ContextMenu>
+                                            <ui:FontIcon FontFamily="{StaticResource font}" FontSize="12" Glyph="&#xe013;"/>
+                                        </Button>
+                                    </Grid>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal"></StackPanel>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                    <Button Grid.Column="2" x:Name="btn_refresh" Click="btn_refresh_Click" BorderThickness="0" Width="{StaticResource size}" Height="{StaticResource size}" Padding="0">
+                        <ui:SymbolIcon Symbol="Refresh"/>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>
